@@ -1,3 +1,4 @@
+using Goldmetal.UndeadSurvivor;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,9 @@ public class Movement : MonoBehaviour
     // Player
     public GameObject player;
 
+    // Weapon
+    public GameObject weapon;
+
     // Rigidbody2D
     private Rigidbody2D _rb2d;
 
@@ -15,6 +19,7 @@ public class Movement : MonoBehaviour
 
     // Variable for SpriteRenderer
     private SpriteRenderer _sr;
+    public SpriteRenderer _sr2;
 
     // Is the character moving
     bool isMoving = false;
@@ -32,6 +37,7 @@ public class Movement : MonoBehaviour
         _anim = GetComponent<Animator>();
 
         _sr = GetComponent<SpriteRenderer>();
+        _sr2 = GetComponent<SpriteRenderer>();
     }
 
     // FixedUpdate is called once per physics update
@@ -55,8 +61,12 @@ public class Movement : MonoBehaviour
 
         // Flip the sprite based on movement direction
         if (moveX < 0)
+        {
             _sr.flipX = true;
+        }
         else if (moveX > 0)
+        {
             _sr.flipX = false;
+        }
     }
 }
