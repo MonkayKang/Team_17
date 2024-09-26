@@ -26,7 +26,7 @@ public class CameraFollow : MonoBehaviour
 
         // Lerp means "linear interpolation" Learned it from Last Semester.
         // Smoothly move the camera towards the target's position
-        // Time.deltatime is relative to the frame rate with the "smooth rate" to run it smoother.
+        // Time.deltatime is relative to the frame rate with the "smooth rate" to make the image not "jittery"
         transform.position = Vector3.Lerp(transform.position, targetPos + offset, Time.deltaTime * smoothRate);
     }
 
