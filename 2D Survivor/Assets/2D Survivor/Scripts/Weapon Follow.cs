@@ -8,9 +8,23 @@ public class WeaponFollow : MonoBehaviour
     public Camera mainCamera; // Reference to the main camera
     public Transform weaponTransform; // The transform of the sword
     public Transform playerTransform; // The transform of the player
+    public GameObject bulletprefab; // Bullet prefab
 
     // A small offset to position the weapon
     public float weaponOffsetX = 0.22f;
+
+    // Is the weapon a gun?
+    public bool isGun = false;
+    public bool isSmg = false;
+
+    // SMG shooting speed
+    public float smgFireRate = 0.1f; // Seconds between bullets for SMG
+    private float nextSmgFireTime = 0f; // Timer for SMG fire rate
+
+    // Bullet shooting force and angles for the shotgun
+    public float bulletSpeed = 10f;
+    public float bulletSpreadAngle = 15f; // The angle spread for the shotgun bullets
+
 
     // Start is called before the first frame update
     void Start()
@@ -43,6 +57,38 @@ public class WeaponFollow : MonoBehaviour
         else // Mouse is to the left of the player
         {
             weaponTransform.position = new Vector3(playerTransform.position.x - weaponOffsetX, weaponTransform.position.y, weaponTransform.position.z);
+        }
+
+        // If it is a gun, Shoot
+        if (isGun && Input.GetMouseButtonDown(0))
+        {
+            for (int i = -1; i <= 1; i++)
+            {
+                // Calculate the direction of the bullet with some spread
+                float spread = i * bulletSpreadAngle; // -bulletSpreadAngle, 0, bulletSpreadAngle
+                Quaternion rotation = Quaternion.Euler(new Vector3(0, 0, weaponTransform.eulerAngles.z + spread));
+
+                // Instantiate the bullet
+                GameObject bullet = Instantiate(bulletprefab, weaponTransform.position, rotation);
+
+                // Set the velocity of the bullet
+                Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+                rb.velocity = bullet.transform.right * bulletSpeed;
+            }
+        }
+        if (isSmg && Input.GetMouseButton(0))
+        {
+            if (Time.time >= nextSmgFireTime) // prevents lag
+            {
+                // Create one bullet going straight forward
+                GameObject bullet = Instantiate(bulletprefab, weaponTransform.position, weaponTransform.rotation);
+
+                // Set the velocity of the bullet
+                Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+                rb.velocity = bullet.transform.right * bulletSpeed;
+
+                nextSmgFireTime = Time.time + smgFireRate;
+            }
         }
     }
 }

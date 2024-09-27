@@ -90,6 +90,13 @@ public class EnemyMovement : MonoBehaviour
                 _anim.SetTrigger("isHit"); // set to true
                 hitCounter++;
             }
+
+            if (collision.gameObject.CompareTag("Bullet")) // Look for if hit by Bullet
+            {
+                _anim.SetTrigger("isHit"); // set to true
+                hitCounter++;
+                Destroy(collision.gameObject);
+            }
         }
 
         private IEnumerator Wait() // Wait before destruction
