@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.PlasticSCM.Editor.WebApi;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class EnemyMovement : MonoBehaviour
 {
@@ -22,6 +24,12 @@ public class EnemyMovement : MonoBehaviour
 
     private bool Dead = false;
 
+    // Coin
+    public GameObject coin;
+
+    // Collision
+    private CapsuleCollider2D _col;
+
 
     // Start is called before the first frame update
     void Start()
@@ -34,12 +42,15 @@ public class EnemyMovement : MonoBehaviour
 
         // Initialize the Animator
         _anim = GetComponent<Animator>();
+
+        //Initialize the collider
+        _col = GetComponent<CapsuleCollider2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!Dead)
+        if (!Dead) // Stops them from moving after death
         {
             // Calculates the distance between player and enemy
             distance = Vector2.Distance(transform.position, transform.position);
@@ -65,6 +76,10 @@ public class EnemyMovement : MonoBehaviour
                 // Update the animator
                 _anim.SetBool("isDead", true);
                 Dead = true;
+                ScoreDisplay.killcount++;
+                _col.enabled = false;
+                // Start Countdown
+                StartCoroutine(Wait());
             }
         }
     }
@@ -77,11 +92,13 @@ public class EnemyMovement : MonoBehaviour
             }
         }
 
-        private IEnumerator WaitAfterHit()
+        private IEnumerator Wait() // Wait before destruction
         {
-            // Wait for 3 seconds
-            yield return new WaitForSeconds(1f);
-            _anim.SetTrigger("isHit");
+            // Wait for 2 seconds
+            yield return new WaitForSeconds(2f);
+            Instantiate(coin, transform.position, Quaternion.identity); // spawn a coin at death
+            Destroy(this.gameObject); // Destroy itself
+            _anim.SetTrigger("isHit"); 
         }
     
 }

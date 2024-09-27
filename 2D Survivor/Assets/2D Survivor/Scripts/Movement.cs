@@ -27,6 +27,8 @@ public class Movement : MonoBehaviour
     // Speed of movement
     public float moveSpeed = 5f;
 
+    private float cash;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -67,6 +69,16 @@ public class Movement : MonoBehaviour
         else if (moveX > 0)
         {
             _sr.flipX = false;
+        }
+    }
+
+    // When Grabbing a Coin
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Coin")) // Collect Cash
+        {
+            ScoreDisplay.score += 10f;
+            Destroy(collision.gameObject); // Destroy
         }
     }
 }
