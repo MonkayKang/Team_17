@@ -20,7 +20,7 @@ We also decided to add some Sub-Mechanic
 -	_Upgrading or getting better weapons_
 
 ## Map Layout
-### The layout of our game is an open world grass land where you play as a **Boy Farmer** fighting agaisnt a horde of **_Undead Enemies._** Our game was designed mainly for PC/Laptop interface. The Audip that you hear is an **upbeat** byte song.
+### The layout of our game is an open world grass land where you play as a **Boy Farmer** fighting agaisnt a horde of **_Undead Enemies._** Our game was designed mainly for PC/Laptop interface. The Audio that you hear is an **upbeat** byte song.
 
 --- 
 ---
