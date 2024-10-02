@@ -36,7 +36,7 @@ This includes:
 
 [Undead Survivor 2D](https://assetstore.unity.com/packages/2d/undead-survivor-assets-pack-238068)
 
-# Cooding
+# Coding
 Most coding was done through my knowledge and work throughout my classes from the previous year. Although there are some coding which is not my own writing.
 These are:
 
