@@ -25,7 +25,11 @@ public class WeaponFollow : MonoBehaviour
     public float bulletSpeed = 10f;
     public float bulletSpreadAngle = 15f; // The angle spread for the shotgun bullets
 
-    
+    // Audio
+    public AudioClip fire; // bullet SFX
+    public AudioClip smg; 
+    public AudioSource audioSource;
+
 
 
     // Start is called before the first frame update
@@ -64,6 +68,7 @@ public class WeaponFollow : MonoBehaviour
         // If it is a gun, Shoot
         if (isGun && Input.GetMouseButtonDown(0))
         {
+            audioSource.PlayOneShot(fire);
             for (int i = -1; i <= 1; i++)
             {
                 // Calculate the direction of the bullet with some spread
@@ -71,22 +76,23 @@ public class WeaponFollow : MonoBehaviour
                 Quaternion rotation = Quaternion.Euler(new Vector3(0, 0, weaponTransform.eulerAngles.z + spread));
 
                 // Instantiate the bullet
-                GameObject bullet = Instantiate(bulletprefab, weaponTransform.position, rotation );
+                GameObject bullet = Instantiate(bulletprefab, weaponTransform.position, rotation) ;
 
                 // Set the velocity of the bullet
-                Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+                Rigidbody2D rb = bullet.GetComponentInChildren<Rigidbody2D>();
                 rb.velocity = bullet.transform.right * bulletSpeed;
             }
         }
         if (isSmg && Input.GetMouseButton(0))
         {
+            audioSource.PlayOneShot(smg);
             if (Time.time >= nextSmgFireTime) // prevents lag
             {
                 // Create one bullet going straight forward
                 GameObject bullet = Instantiate(bulletprefab, weaponTransform.position, weaponTransform.rotation);
 
                 // Set the velocity of the bullet
-                Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+                Rigidbody2D rb = bullet.GetComponentInChildren<Rigidbody2D>();
                 rb.velocity = bullet.transform.right * bulletSpeed;
 
                 nextSmgFireTime = Time.time + smgFireRate;

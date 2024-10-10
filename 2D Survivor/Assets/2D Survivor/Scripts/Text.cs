@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI; // Importing the UI namespace
 
 public class ScoreDisplay : MonoBehaviour
@@ -26,5 +27,10 @@ public class ScoreDisplay : MonoBehaviour
         text2.text = ":" + score.ToString(); 
         Kills.text = killcount.ToString();
 
+    }
+
+    public void ResetGame()
+    {
+        SceneManager.LoadScene("Zombie Survival");
     }
 }

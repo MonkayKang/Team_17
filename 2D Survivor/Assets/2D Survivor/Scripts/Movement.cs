@@ -39,7 +39,11 @@ public class Movement : MonoBehaviour
     // Speed of movement
     public float moveSpeed = 5f;
 
-    private float cash;
+    // Audio
+    public AudioClip deathSound; // Death sound clip
+    public AudioSource audioSource;
+    public AudioSource CameraSource; // Stop Music
+    private bool hasPlayedDeathSound;
 
     // Health
     public Slider health;
@@ -49,6 +53,9 @@ public class Movement : MonoBehaviour
 
     // Health reduction rate
     public float damageRate = 0.5f; // Damage per second
+
+    // Reset
+    public GameObject Reset;
 
     // Start is called before the first frame update
     void Start()
@@ -75,8 +82,17 @@ public class Movement : MonoBehaviour
         // Set the movement
         Vector2 movement = new Vector2(moveX, moveY);
 
-        // Move the player
-        _rb2d.velocity = movement * moveSpeed;
+        if (!hasPlayedDeathSound) // If player hasnt died
+        {
+            // Move the player
+            _rb2d.velocity = movement * moveSpeed;
+        }
+        if (hasPlayedDeathSound) // If player has died
+        {
+            // stop the player
+            _rb2d.velocity = movement * 0;
+        }
+
 
         // Check if the player is moving
         isMoving = movement.magnitude > 0;
@@ -124,6 +140,16 @@ public class Movement : MonoBehaviour
             {
                 health.value = 0;
                 _anim.SetBool("isDead", true);// Death animation
+
+                // Stop Audio
+                CameraSource.enabled = false;
+                // Play Audio 
+                if (!hasPlayedDeathSound)
+                {
+                    audioSource.PlayOneShot(deathSound);
+                    hasPlayedDeathSound = true; // Mark that the sound has been played
+                    Reset.SetActive(true); // Bring up the reset Button
+                }
 
                 // Stops the Collision
                 weapon1.SetActive(false); 

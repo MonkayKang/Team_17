@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class GameManager : MonoBehaviour
     //Seperate variable to track which item of the enum to use
     public gameState currentState;
 
+    public Slider slider;
+
 
     private void Awake()
     {
@@ -21,9 +24,6 @@ public class GameManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-
-            // Makes the object persistant
-            DontDestroyOnLoad(gameObject);
         }
 
         // If it already exsist, destroy this gameObject
@@ -56,6 +56,10 @@ public class GameManager : MonoBehaviour
                 break;
 
         }
+        if (slider.value <= 0)
+        {
+            StartCoroutine(Wait());
+        }
     }
 
     public void StartGame()
@@ -66,6 +70,13 @@ public class GameManager : MonoBehaviour
     public void StopGame()
     {
         //Pause
+        currentState = gameState.pause;
+    }
+
+    private IEnumerator Wait() // Wait before destruction
+    {
+        // Wait for 2 seconds
+        yield return new WaitForSeconds(1f);
         currentState = gameState.pause;
     }
 }
