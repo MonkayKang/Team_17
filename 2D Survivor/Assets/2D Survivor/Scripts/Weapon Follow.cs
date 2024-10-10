@@ -83,10 +83,16 @@ public class WeaponFollow : MonoBehaviour
                 rb.velocity = bullet.transform.right * bulletSpeed;
             }
         }
-        if (isSmg && Input.GetMouseButton(0))
+        if (smg && Input.GetMouseButton(0)) // When the fire button is held down
         {
-            audioSource.PlayOneShot(smg);
-            if (Time.time >= nextSmgFireTime) // prevents lag
+            if (!audioSource.isPlaying) // If the SMG sound isn't playing, start it
+            {
+                audioSource.clip = smg;
+                audioSource.loop = true; // Loop the sound for continuous fire
+                audioSource.Play();
+            }
+
+            if (Time.time >= nextSmgFireTime) // Fire the SMG bullet
             {
                 // Create one bullet going straight forward
                 GameObject bullet = Instantiate(bulletprefab, weaponTransform.position, weaponTransform.rotation);
@@ -97,6 +103,10 @@ public class WeaponFollow : MonoBehaviour
 
                 nextSmgFireTime = Time.time + smgFireRate;
             }
+        }
+        else if (audioSource.isPlaying) // Stop the SMG sound when the fire button is released
+        {
+            audioSource.Stop();
         }
     }
 

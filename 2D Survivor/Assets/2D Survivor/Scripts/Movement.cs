@@ -41,6 +41,8 @@ public class Movement : MonoBehaviour
 
     // Audio
     public AudioClip deathSound; // Death sound clip
+    public AudioClip hit; // Hit SFX
+    public AudioClip coin; // Coin SFX
     public AudioSource audioSource;
     public AudioSource CameraSource; // Stop Music
     private bool hasPlayedDeathSound;
@@ -126,12 +128,15 @@ public class Movement : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Coin")) // Collect Cash
         {
+            audioSource.PlayOneShot(coin);
             ScoreDisplay.score += 10f;
             Destroy(collision.gameObject); // Destroy
+            
         }
 
         if (collision.gameObject.CompareTag("Enemy")) // If colliding with enemy
         {
+            audioSource.PlayOneShot(hit);
             // Reduce the health slowly 
             health.value -= damageRate * Time.deltaTime;
 
