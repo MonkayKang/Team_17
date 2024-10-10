@@ -26,6 +26,10 @@ public class Shop : MonoBehaviour
         {
             button.interactable = true; // they can purchase it
         }
+        if (ScoreDisplay.score <= money)
+        {
+            button.interactable = false;
+        }
     }
 
     public void Purchase()

@@ -1,7 +1,10 @@
 using Goldmetal.UndeadSurvivor;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.Windows.WebCam;
 
 public class Movement : MonoBehaviour
 {
@@ -10,6 +13,15 @@ public class Movement : MonoBehaviour
 
     // Weapon
     public GameObject weapon;
+
+    // Disable Weapon
+    public GameObject weapon1;
+    public GameObject weapon2;
+    public GameObject weapon3;
+    public GameObject weapon4;
+
+    // 2D Collider
+    public CapsuleCollider2D capsule;
 
     // Rigidbody2D
     private Rigidbody2D _rb2d;
@@ -29,6 +41,15 @@ public class Movement : MonoBehaviour
 
     private float cash;
 
+    // Health
+    public Slider health;
+    public float regen = 0.5f;
+    public float regenInterval = 1f; // Regen Interal
+    private float regenCooldown; // Cooldown
+
+    // Health reduction rate
+    public float damageRate = 0.5f; // Damage per second
+
     // Start is called before the first frame update
     void Start()
     {
@@ -40,6 +61,8 @@ public class Movement : MonoBehaviour
 
         _sr = GetComponent<SpriteRenderer>();
         _sr2 = GetComponent<SpriteRenderer>();
+
+        capsule = GetComponent<CapsuleCollider2D>();
     }
 
     // FixedUpdate is called once per physics update
@@ -70,6 +93,16 @@ public class Movement : MonoBehaviour
         {
             _sr.flipX = false;
         }
+
+        if (health.value < 100 && regenCooldown <= 0)
+        {
+            health.value += regen;
+            regenCooldown = regenInterval; // Reset the timer
+        }
+        else
+        {
+            regenCooldown -= Time.deltaTime; // Countdown the timer
+        }
     }
 
     // When Grabbing a Coin
@@ -79,6 +112,26 @@ public class Movement : MonoBehaviour
         {
             ScoreDisplay.score += 10f;
             Destroy(collision.gameObject); // Destroy
+        }
+
+        if (collision.gameObject.CompareTag("Enemy")) // If colliding with enemy
+        {
+            // Reduce the health slowly 
+            health.value -= damageRate * Time.deltaTime;
+
+            // Prevents health from going past 0
+            if (health.value <= 0)
+            {
+                health.value = 0;
+                _anim.SetBool("isDead", true);// Death animation
+
+                // Stops the Collision
+                weapon1.SetActive(false); 
+                weapon2.SetActive(false);
+                weapon3.SetActive(false);
+                weapon4.SetActive(false);
+                capsule.enabled = false;
+            }
         }
     }
 }

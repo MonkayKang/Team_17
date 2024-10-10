@@ -25,6 +25,8 @@ public class WeaponFollow : MonoBehaviour
     public float bulletSpeed = 10f;
     public float bulletSpreadAngle = 15f; // The angle spread for the shotgun bullets
 
+    
+
 
     // Start is called before the first frame update
     void Start()
@@ -69,7 +71,7 @@ public class WeaponFollow : MonoBehaviour
                 Quaternion rotation = Quaternion.Euler(new Vector3(0, 0, weaponTransform.eulerAngles.z + spread));
 
                 // Instantiate the bullet
-                GameObject bullet = Instantiate(bulletprefab, weaponTransform.position, rotation);
+                GameObject bullet = Instantiate(bulletprefab, weaponTransform.position, rotation );
 
                 // Set the velocity of the bullet
                 Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
@@ -91,4 +93,5 @@ public class WeaponFollow : MonoBehaviour
             }
         }
     }
+
 }

@@ -29,7 +29,6 @@ public class EnemyMovement : MonoBehaviour
     // Collision
     private CapsuleCollider2D _col;
 
-
     // Start is called before the first frame update
     void Start()
     {
@@ -82,7 +81,8 @@ public class EnemyMovement : MonoBehaviour
             }
         }
     }
-        private void OnCollisionEnter2D(Collision2D collision)
+
+    private void OnCollisionEnter2D(Collision2D collision)
         {
             if (collision.gameObject.CompareTag("Player")) // Look for if hit by weapon
             {
