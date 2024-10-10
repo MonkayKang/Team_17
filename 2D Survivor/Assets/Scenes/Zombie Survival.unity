@@ -994,6 +994,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 519420031}
     - target: {fileID: 4009449902147115513, guid: 943b3b2e62f11404aa7d601ca0843b99, type: 3}
+      propertyPath: audioSource
+      value: 
+      objectReference: {fileID: 1922016559}
+    - target: {fileID: 4009449902147115513, guid: 943b3b2e62f11404aa7d601ca0843b99, type: 3}
       propertyPath: weaponOffsetX
       value: 0.22
       objectReference: {fileID: 0}
@@ -25583,8 +25587,8 @@ MonoBehaviour:
   CameraSource: {fileID: 519420034}
   health: {fileID: 259094687}
   regen: 0.05
-  regenInterval: 3
-  damageRate: 1.5
+  regenInterval: 2
+  damageRate: 1
   Reset: {fileID: 866132318}
 --- !u!70 &1922016557
 CapsuleCollider2D:
@@ -26706,6 +26710,10 @@ PrefabInstance:
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 519420031}
+    - target: {fileID: 6472256592248677123, guid: d21523f994926f44f893b342e9548343, type: 3}
+      propertyPath: audioSource
+      value: 
+      objectReference: {fileID: 1922016559}
     - target: {fileID: 6472256592248677123, guid: d21523f994926f44f893b342e9548343, type: 3}
       propertyPath: bulletprefab
       value: 
