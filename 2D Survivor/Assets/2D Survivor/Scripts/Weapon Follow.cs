@@ -69,8 +69,10 @@ public class WeaponFollow : MonoBehaviour
         if (isGun && Input.GetMouseButtonDown(0))
         {
             audioSource.PlayOneShot(fire);
+
             for (int i = -1; i <= 1; i++)
             {
+                audioSource.PlayOneShot(fire);
                 // Calculate the direction of the bullet with some spread
                 float spread = i * bulletSpreadAngle; // -bulletSpreadAngle, 0, bulletSpreadAngle
                 Quaternion rotation = Quaternion.Euler(new Vector3(0, 0, weaponTransform.eulerAngles.z + spread));
@@ -83,10 +85,16 @@ public class WeaponFollow : MonoBehaviour
                 rb.velocity = bullet.transform.right * bulletSpeed;
             }
         }
-        if (isSmg && Input.GetMouseButton(0))
+        if (smg && Input.GetMouseButton(0)) // When the fire button is held down
         {
-            audioSource.PlayOneShot(smg);
-            if (Time.time >= nextSmgFireTime) // prevents lag
+            if (!audioSource.isPlaying) // If the SMG sound isn't playing, start it
+            {
+                audioSource.clip = smg;
+                audioSource.loop = true; // Loop the sound for continuous fire
+                audioSource.Play();
+            }
+
+            if (Time.time >= nextSmgFireTime) // Fire the SMG bullet
             {
                 // Create one bullet going straight forward
                 GameObject bullet = Instantiate(bulletprefab, weaponTransform.position, weaponTransform.rotation);
@@ -97,6 +105,10 @@ public class WeaponFollow : MonoBehaviour
 
                 nextSmgFireTime = Time.time + smgFireRate;
             }
+        }
+        else if (audioSource.isPlaying) // Stop the SMG sound when the fire button is released
+        {
+            audioSource.Stop();
         }
     }
 

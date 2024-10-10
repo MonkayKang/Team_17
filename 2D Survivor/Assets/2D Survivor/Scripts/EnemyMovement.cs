@@ -29,6 +29,11 @@ public class EnemyMovement : MonoBehaviour
     // Collision
     private CapsuleCollider2D _col;
 
+    // Audio
+    public AudioClip clip;
+    public AudioClip dead;
+    public AudioSource audioSource;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -71,6 +76,9 @@ public class EnemyMovement : MonoBehaviour
 
             if (hitCounter > 1) // Hit more than once
             {
+                // Play Audio 
+                audioSource.PlayOneShot(dead);
+
                 // Update the animator
                 _anim.SetBool("isDead", true);
                 Dead = true;
@@ -86,12 +94,14 @@ public class EnemyMovement : MonoBehaviour
         {
             if (collision.gameObject.CompareTag("Player")) // Look for if hit by weapon
             {
+                audioSource.PlayOneShot(clip);
                 _anim.SetTrigger("isHit"); // set to true
                 hitCounter++;
             }
 
             if (collision.gameObject.CompareTag("Bullet")) // Look for if hit by Bullet
             {
+                audioSource.PlayOneShot(clip);
                 _anim.SetTrigger("isHit"); // set to true
                 hitCounter++;
                 Destroy(collision.gameObject);
