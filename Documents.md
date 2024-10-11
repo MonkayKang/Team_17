@@ -62,3 +62,9 @@ ARTWORK:
 > The shopping cart was used from Pinterest
 > [Shopping Cart](https://ca.pinterest.com/pin/1120903794738591958/)
 
+Graphic and genre
+> the graphic is made in 2D, it was made in unity, it can be played muplity defentions.
+> the genre of our game is a fanstic rogue-like shooting game.
+
+The objective of the game
+> The objective of the game is to surive as long as possible and well also killign emeies to get better weapons like swords and guns. 
